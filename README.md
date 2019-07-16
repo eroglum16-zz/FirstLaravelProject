@@ -1,3 +1,3 @@
-# FirstLaravelProject
+# First Laravel Project
 
 > Just beginning to learn ...
