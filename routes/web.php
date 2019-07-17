@@ -24,3 +24,6 @@ Route::get('/todo', 'PagesController@todo');
 Route::get('/projects', 'ProjectsController@index');
 
 Route::get('/albums', 'AlbumsController@index');
+
+Route::post('/albums', 'AlbumsController@store');
+

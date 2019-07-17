@@ -15,4 +15,8 @@ class AlbumsController extends Controller
 
         return view('albums.index',$data);
     }
+
+    public function store(){
+        return request()->all();
+    }
 }
