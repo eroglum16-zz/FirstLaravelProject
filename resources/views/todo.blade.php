@@ -9,7 +9,7 @@
         <hr>
         <div class="row">
             <div class="col-md-3">
-                <ul class="list-group ">
+                <ul class="list-group">
                     @foreach($tasks as $task)
                         <li class="list-group-item bg-dark hover-dark">
                             <i class="fa fa-check"> </i>
