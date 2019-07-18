@@ -23,7 +23,17 @@ Route::get('/todo', 'PagesController@todo');
 
 Route::get('/projects', 'ProjectsController@index');
 
+Route::resource('albums','AlbumsController');
+
+/*
 Route::get('/albums', 'AlbumsController@index');
+
+Route::get('/albums/{album}', 'AlbumsController@show');
 
 Route::post('/albums', 'AlbumsController@store');
 
+Route::patch('/albums/{album}','AlbumsController@update');
+
+Route::delete('/albums/{album}','AlbumsController@destroy');
+
+*/

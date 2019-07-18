@@ -4,7 +4,7 @@
 
 @section('content')
     <div class="container">
-        <h2>Projects</h2>
+        <h2 class="page-heading">Projects</h2>
         <hr>
 
         <table class="table table-dark table-striped">

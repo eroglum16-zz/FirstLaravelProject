@@ -5,7 +5,7 @@
 @section('content')
 
     <div class="container">
-        <h1 class="text-dark">Todo List</h1>
+        <h2 class="text-dark page-heading">Todo List</h2>
         <hr>
         <div class="row">
             <div class="col-md-3">

@@ -4,7 +4,7 @@
 
 @section('content')
     <div class="container">
-        <h1 class="text-dark">Home Page</h1>
+        <h1 class="text-dark page-heading">Home Page</h1>
         <hr>
         <div class="alert alert-success">
 

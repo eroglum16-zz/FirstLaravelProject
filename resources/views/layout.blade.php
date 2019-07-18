@@ -12,18 +12,46 @@
         .hover-dark:hover{
             color:white;
         }
+        .bar{
+            background-color: #343a40;
+            margin-bottom: 50px;
+        }
+        .page-heading{
+            color: #343a40;
+            font-family: "Comic Sans MS";
+        }
+        .nav-link{
+            color: white;
+            font-family: "Courier New";
+            font-size: 22px;
+        }
+        .nav-link:hover{
+            color: darkorange;
+        }
+        .stylized-input{
+            border: none;
+            border-bottom: 1px solid #343a40;
+        }
     </style>
 </head>
 <body>
 
-    <ul class="nav justify-content-center">
-        <li class="nav-item"><a class="nav-link" href="/home">Home</a></li>
-        <li class="nav-item"><a class="nav-link" href="/about">About</a></li>
-        <li class="nav-item"><a class="nav-link" href="/contact">Contact</a></li>
-        <li class="nav-item"><a class="nav-link" href="/todo">Todo</a></li>
-        <li class="nav-item"><a class="nav-link" href="/projects">Projects</a></li>
-        <li class="nav-item"><a class="nav-link" href="/albums">Albums</a></li>
-    </ul>
+    <div class="bar">
+        <ul class="nav justify-content-center">
+            <li class="nav-item"><a class="nav-link" href="/home">Home</a></li>
+            <li class="nav-item"><a class="nav-link" href="/about">About</a></li>
+            <li class="nav-item"><a class="nav-link" href="/contact">Contact</a></li>
+            <li class="nav-item"><a class="nav-link" href="/todo">Todo</a></li>
+            <li class="nav-item"><a class="nav-link" href="/projects">Projects</a></li>
+            <li class="nav-item"><a class="nav-link" href="/albums">Albums</a></li>
+        </ul>
+    </div>
+
+
+
+
+
+
 
     @yield('content')
 </body>
