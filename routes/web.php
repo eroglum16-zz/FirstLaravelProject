@@ -29,7 +29,7 @@ Route::post('/projects/{project}/tasks','ProjectTasksController@store');
 
 Route::patch('/tasks/{task}','ProjectTasksController@update');
 
-Route::resource('albums','AlbumsController');
+Route::resource('albums','AlbumsController')->middleware('auth');
 
 
 
@@ -46,6 +46,6 @@ Route::delete('/albums/{album}','AlbumsController@destroy');
 
 */
 
-//Auth::routes();
+Auth::routes();
 
 //Route::get('/home', 'HomeController@index')->name('home');

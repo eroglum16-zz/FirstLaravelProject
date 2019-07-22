@@ -52,6 +52,19 @@
             <li class="nav-item"><a class="nav-link" href="/todo">Todo</a></li>
             <li class="nav-item"><a class="nav-link" href="/projects">Projects</a></li>
             <li class="nav-item"><a class="nav-link" href="/albums">Albums</a></li>
+            @auth
+            <li class="nav-item">
+            <a class="nav-link" href="{{ route('logout') }}"
+               onclick="event.preventDefault();
+                                                     document.getElementById('logout-form').submit();">
+                {{ __('Logout') }}
+            </a>
+
+            <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                @csrf
+            </form>
+            </li>
+            @endauth
         </ul>
     </div>
 
