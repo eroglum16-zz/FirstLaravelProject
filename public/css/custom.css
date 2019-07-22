@@ -1,0 +1,27 @@
+.hover-dark{
+    color: #ddd;
+    cursor: pointer;
+}
+.hover-dark:hover{
+    color:white;
+}
+.bar{
+    background-color: #343a40;
+    margin-bottom: 50px;
+}
+.page-heading{
+    color: #343a40;
+    font-family: "Comic Sans MS";
+}
+.nav-link{
+    color: white;
+    font-family: "Courier New";
+    font-size: 22px;
+}
+.nav-link:hover{
+    color: darkorange;
+}
+.stylized-input{
+    border: none;
+    border-bottom: 1px solid #343a40;
+}

@@ -16,4 +16,9 @@ class ProjectsController extends Controller
 
         return view('projects.index',$data);
     }
+
+    public function show(Project $project){
+
+        return view('projects.show',['project'=>$project]);
+    }
 }

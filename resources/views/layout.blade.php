@@ -2,7 +2,6 @@
 <head>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-    <title>@yield('title','Laravel Project')</title>
 
     <style>
         .hover-dark{
@@ -18,7 +17,7 @@
         }
         .page-heading{
             color: #343a40;
-            font-family: "Comic Sans MS";
+            font-family: -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Oxygen-Sans,Ubuntu,Cantarell,"Helvetica Neue",sans-serif;
         }
         .nav-link{
             color: white;
@@ -32,10 +31,19 @@
             border: none;
             border-bottom: 1px solid #343a40;
         }
+        .margin-bottom-30{
+            margin-bottom: 30px;
+        }
+        .is-complete{
+            text-decoration: line-through;
+        }
     </style>
+
+    <title>@yield('title','Laravel Project')</title>
+
+
 </head>
 <body>
-
     <div class="bar">
         <ul class="nav justify-content-center">
             <li class="nav-item"><a class="nav-link" href="/home">Home</a></li>
@@ -46,12 +54,6 @@
             <li class="nav-item"><a class="nav-link" href="/albums">Albums</a></li>
         </ul>
     </div>
-
-
-
-
-
-
 
     @yield('content')
 </body>

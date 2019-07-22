@@ -38,22 +38,7 @@
                 </tbody>
             </table>
         </div>
-        <script>
-            $(function () {
-                $('.album-popover').popover({
-                    container: 'body'
-                })
-            })
-        </script>
-        @if($errors->any())
-        <hr>
-        @endif
-        @foreach($errors->all() as $error)
-
-            <div class="alert alert-dark">
-                {{$error}}
-            </div>
-        @endforeach
+        @include('errors')
         <hr>
         <div class="row">
             <div class="col-md-2">

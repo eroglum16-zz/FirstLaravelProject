@@ -23,7 +23,15 @@ Route::get('/todo', 'PagesController@todo');
 
 Route::get('/projects', 'ProjectsController@index');
 
+Route::get('/projects/{project}','ProjectsController@show');
+
+Route::post('/projects/{project}/tasks','ProjectTasksController@store');
+
+Route::patch('/tasks/{task}','ProjectTasksController@update');
+
 Route::resource('albums','AlbumsController');
+
+
 
 /*
 Route::get('/albums', 'AlbumsController@index');
@@ -37,3 +45,7 @@ Route::patch('/albums/{album}','AlbumsController@update');
 Route::delete('/albums/{album}','AlbumsController@destroy');
 
 */
+
+//Auth::routes();
+
+//Route::get('/home', 'HomeController@index')->name('home');
