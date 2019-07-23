@@ -4,6 +4,14 @@
 
 @section('content')
     <div class="container">
+
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="/projects">Projects</a></li>
+                <li class="breadcrumb-item active" aria-current="page">{{$project->title}}</li>
+            </ol>
+        </nav>
+
         <h2 class="page-heading">{{$project->title}}</h2>
         <hr>
 

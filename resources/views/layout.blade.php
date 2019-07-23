@@ -44,30 +44,54 @@
 
 </head>
 <body>
-    <div class="bar">
-        <ul class="nav justify-content-center">
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark" style="margin:24px 0;">
+    <a class="navbar-brand" href="javascript:void(0)"></a>
+    <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navb">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navb">
+        <ul class="navbar-nav mr-auto">
             <li class="nav-item"><a class="nav-link" href="/home">Home</a></li>
             <li class="nav-item"><a class="nav-link" href="/about">About</a></li>
             <li class="nav-item"><a class="nav-link" href="/contact">Contact</a></li>
             <li class="nav-item"><a class="nav-link" href="/todo">Todo</a></li>
             <li class="nav-item"><a class="nav-link" href="/projects">Projects</a></li>
             <li class="nav-item"><a class="nav-link" href="/albums">Albums</a></li>
-            @auth
-            <li class="nav-item">
-            <a class="nav-link" href="{{ route('logout') }}"
-               onclick="event.preventDefault();
-                                                     document.getElementById('logout-form').submit();">
-                {{ __('Logout') }}
-            </a>
 
-            <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-                @csrf
-            </form>
-            </li>
-            @endauth
         </ul>
-    </div>
 
+        @auth
+            <span style="color: #bbbbbb" class="nav-link">{{auth()->user()->name}}</span>
+
+                <a class="nav-link" href="{{ route('logout') }}"
+                   onclick="event.preventDefault();
+                                                     document.getElementById('logout-form').submit();">
+                    {{ __('Logout') }}
+                </a>
+
+                <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                    @csrf
+                </form>
+
+        @endauth
+
+        @guest
+            <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>
+
+            @if (Route::has('register'))
+
+                <a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a>
+
+            @endif
+        @endguest
+
+    </div>
+</nav>
+
+    <div class="bar">
+
+    </div>
     @yield('content')
 </body>
 </html>

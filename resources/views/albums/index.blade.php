@@ -51,10 +51,12 @@
                     @csrf
                 <div class="row">
                     <div class="col-md-4 form-group">
-                        <input class="form-control form-control-lg {{$errors->has('artist') ? 'border-danger' : 'stylized-input'}}" value="{{old('artist')}}" name="artist" placeholder="Artist" >
+                        <input class="form-control form-control-lg {{$errors->has('artist') ? 'border-danger' : 'stylized-input'}}" value="{{old('artist')}}"
+                               name="artist" placeholder="Artist" onfocus="this.placeholder='Ex: Michael Jackson'" onfocusout="this.placeholder='Artist'" >
                     </div>
                     <div class="col-md-4 form-group">
-                        <input class="form-control form-control-lg {{$errors->has('title') ? 'border-danger' : 'stylized-input'}}" value="{{old('title')}}" name="title" placeholder="Album Title" >
+                        <input class="form-control form-control-lg {{$errors->has('title') ? 'border-danger' : 'stylized-input'}}" value="{{old('title')}}"
+                               name="title" placeholder="Album Title" onfocus="this.placeholder='Ex: Thriller'" onfocusout="this.placeholder='Title'">
                     </div>
                     <div class="col-md-2 form-group">
                         <button class="btn btn-success btn-lg btn-block" type="submit"> <i class="fa fa-check"></i> Save</button>

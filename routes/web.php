@@ -21,15 +21,24 @@ Route::get('/contact', 'PagesController@contact');
 
 Route::get('/todo', 'PagesController@todo');
 
-Route::get('/projects', 'ProjectsController@index');
+/*--------------------------------------------------*/
 
-Route::get('/projects/{project}','ProjectsController@show');
+Route::resource('projects','ProjectsController'); //->middleware('can:view,project');
+
+/*--------------------------------------------------*/
+
+Route::resource('albums','AlbumsController')->middleware('auth');
+
 
 Route::post('/projects/{project}/tasks','ProjectTasksController@store');
 
 Route::patch('/tasks/{task}','ProjectTasksController@update');
 
-Route::resource('albums','AlbumsController')->middleware('auth');
+
+
+
+//Route::get('/home', 'HomeController@index')->name('home');
+
 
 
 
