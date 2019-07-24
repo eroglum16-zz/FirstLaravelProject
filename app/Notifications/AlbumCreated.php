@@ -58,6 +58,7 @@ class AlbumCreated extends Notification
     public function toArray($notifiable)
     {
         return [
+            'id' => $this->album->id,
             'title' => $this->album->title,
             'artist' => $this->album->artist
         ];

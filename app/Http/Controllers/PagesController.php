@@ -34,4 +34,15 @@ class PagesController extends Controller
 
         return view('todo')->with($data);
     }
+
+    public function markRead($id){
+
+        foreach (auth()->user()->unreadNotifications as $notification){
+            if ($notification->data['id']==$id){
+                $notification->markAsRead();
+                $n = $notification;
+            }
+        }
+        return true;
+    }
 }

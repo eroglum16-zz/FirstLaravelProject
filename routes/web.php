@@ -21,6 +21,8 @@ Route::get('/contact', 'PagesController@contact');
 
 Route::get('/todo', 'PagesController@todo');
 
+Route::get('/markRead/{id}','PagesController@markRead');
+
 /*--------------------------------------------------*/
 
 Route::resource('projects','ProjectsController'); //->middleware('can:view,project');
@@ -33,7 +35,6 @@ Route::resource('albums','AlbumsController')->middleware('auth');
 Route::post('/projects/{project}/tasks','ProjectTasksController@store');
 
 Route::patch('/tasks/{task}','ProjectTasksController@update');
-
 
 
 
