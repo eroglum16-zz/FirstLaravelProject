@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Notifications\AlbumCreated;
 use App\Project;
 use Illuminate\Http\Request;
 use App\Album;
@@ -12,6 +13,7 @@ class AlbumsController extends Controller
 
         $albums = Album::all();
 
+        //auth()->user()->notifications
 
         return view('albums.index',compact('albums'));
     }
@@ -23,7 +25,13 @@ class AlbumsController extends Controller
             'artist' => ['required','min:3','max:255']
         ]);
 
-        Album::create($validated);
+        $album = Album::create($validated);
+
+        $user = auth()->user();
+
+        $user->notify(new AlbumCreated($album));
+
+        flash('Album "'.$album->title.'" has been created.');
 
         /*
         $album = new Album();

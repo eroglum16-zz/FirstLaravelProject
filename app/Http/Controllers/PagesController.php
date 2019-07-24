@@ -2,11 +2,16 @@
 
 namespace App\Http\Controllers;
 
+use App\Notifications\AlbumCreated;
 use Illuminate\Http\Request;
+use App\User;
 
 class PagesController extends Controller
 {
     public function home(){
+
+        session(['name'=>'Mert']);
+
         return view('main');
     }
 

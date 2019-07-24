@@ -7,6 +7,12 @@
         <h2 class="page-heading">Albums</h2>
         <hr>
 
+        @if(session('message'))
+        <div class="alert alert-success">
+            {{session('message')}}
+        </div>
+        @endif
+
         <div class="row shadow shadow-lg" style="height: 50%; overflow: scroll;">
             <table class="table table-dark table-striped">
                 <thead>
