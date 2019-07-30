@@ -36,7 +36,9 @@ Route::post('/projects/{project}/tasks','ProjectTasksController@store');
 
 Route::patch('/tasks/{task}','ProjectTasksController@update');
 
+/*--------------------------------------------------*/
 
+Route::get('/react', 'ReactController@index');
 
 //Route::get('/home', 'HomeController@index')->name('home');
 
