@@ -9,13 +9,14 @@ class ReactController extends Controller
 {
     public function index(){
 
+        $album = Album::all()->first();
 
-        $data['name']="Mert";
-        $data['city']="izmir";
-        $data['age']=24;
+        return view('react.index',compact('album'));
+    }
 
+    public function serveAlbum($id){
+        $album = Album::find($id);
 
-
-        return view('react.index',['data'=>$data]);
+        return $album;
     }
 }

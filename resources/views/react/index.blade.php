@@ -11,6 +11,8 @@
 
         <div id="like_button_container"></div>
 
+        <div id="temp-album"></div>
+
     </div>
 
     <script src="https://unpkg.com/react@16/umd/react.development.js" crossorigin></script>
@@ -24,7 +26,7 @@
 
     <script type="text/babel">
         let domContainer = document.querySelector('#like_button_container');
-        ReactDOM.render(<ChatBox  />, domContainer);
+        ReactDOM.render(<ChatBox />, domContainer);
     </script>
 
 @endsection

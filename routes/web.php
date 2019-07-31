@@ -40,6 +40,8 @@ Route::patch('/tasks/{task}','ProjectTasksController@update');
 
 Route::get('/react', 'ReactController@index');
 
+Route::get('/serveAlbum/{id}','ReactController@serveAlbum');
+
 //Route::get('/home', 'HomeController@index')->name('home');
 
 
