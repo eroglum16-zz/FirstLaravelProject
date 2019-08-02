@@ -26,7 +26,7 @@
 
     <script type="text/babel">
         let domContainer = document.querySelector('#like_button_container');
-        ReactDOM.render(<ChatBox />, domContainer);
+        ReactDOM.render(<ChatBox user="{{auth()->user()}}" />, domContainer);
     </script>
 
 @endsection
