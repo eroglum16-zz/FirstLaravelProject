@@ -14,25 +14,62 @@ class ChatBox extends React.Component{
 
         this.handleSend = this.handleSend.bind(this);
     }
+    componentDidMount() {
+        this.timerID = setInterval(
+            () => this.tick(),
+            3000
+        );
+    }
+    componentWillUnmount() {
+        clearInterval(this.timerID);
+    }
+    tick() {
+        fetch('/messages')
+            .then((response) => response.json())
+            .then((responseJson) => {
+                this.setState({
+                    messages: responseJson
+                });
+            })
+            .catch((error) => {
+                console.error(error);
+            });
+    }
     handleSend(){
 
         const user = JSON.parse(this.props.user);
 
+        const receiver_id = user.id==1 ? 2 : 1 ;
+
         const inputElement = document.getElementById('messageText');
 
-        let messageList = this.state.messages;
+        fetch('/messages', {
+            method: 'POST',
+            headers: {
+                Accept: 'application/json',
+                'Content-Type': 'application/json',
+                'X-CSRF-TOKEN': this.props.csrf,
+            },
+            body: JSON.stringify({
+                sender_id: user.id,
+                receiver_id: receiver_id,
+                messageText: inputElement.value
+            }),
+        }).then((response) => response.json())
+            .then((responseJson) => {
+                this.setState({
+                    messages: responseJson
+                });
+            })
+            .catch((error) => {
+                console.error(error);
+            });
 
-        messageList.push({
-            senderName: user.name,
-            messageText: inputElement.value,
-            messageSentDate: new Date().toLocaleTimeString()
-        });
-
-        this.setState({
-            messages : messageList
-        });
 
         inputElement.value = "";
+        var element = document.getElementById('scrollingContainer');
+        element.scrollTop = element.scrollHeight - element.clientHeight;
+
     }
     render() {
         const messages = this.state.messages;
@@ -46,9 +83,9 @@ class ChatBox extends React.Component{
                 <div className='card-header'>
                     Chat Box
                 </div>
-                <MessagesArea messageList={messageList} />
+                <MessagesArea messageList={messageList} ref={(el)=>{this.messagesArea=el;}} />
                 <div className='card-footer'>
-                    <InputArea onClick={this.handleSend} ></InputArea>
+                    <InputArea onClick={this.handleSend} messagesArea={this.messagesArea} ></InputArea>
                 </div>
             </div>
         );
@@ -57,22 +94,60 @@ class ChatBox extends React.Component{
 
 
 class MessagesArea extends React.Component{
+    scrollToBottom = () => {
+        this.messagesEnd.scrollIntoView({ behavior: "smooth" });
+    }
+
+    componentDidMount() {
+        this.scrollToBottom();
+    }
+
+    componentDidUpdate() {
+        this.scrollToBottom();
+    }
     render(){
         return(
-            <div className='card-body message-output'>
+            <div className='card-body message-output' >
                 {this.props.messageList}
+                <div style={{ float:"left", clear: "both" }}
+                     ref={(el) => { this.messagesEnd = el; }}>
+                </div>
             </div>
         );
     }
 }
 
 class InputArea extends React.Component{
+    constructor(props) {
+        super(props);
+        this.handleEnter = this.handleEnter.bind(this);
+    }
+
+    handleEnter(target){
+        if(target.charCode==13){
+            target.preventDefault();
+            this.sendButton.click();
+        }
+        this.props.messagesArea.scrollToBottom;
+    }
+
     render() {
         return (
             <form className='form'>
                 <div className='row'>
-                    <textarea className='message-input col-md-8' id='messageText' type='text' placeholder='Message...' ></textarea>
-                    <button type='button' className='btn btn-dark btn-block col-md-2' onClick={this.props.onClick}> <i className='fa fa-send'></i> </button>
+                    <textarea className='message-input col-md-8'
+                              id='messageText'
+                              type='text'
+                              placeholder='Message...'
+                              onKeyPress={this.handleEnter}
+                              autoFocus={true}>
+                    </textarea>
+                    <button className='btn btn-dark btn-block col-md-2'
+                            type='button'
+                            onClick={this.props.onClick}
+                            ref={(el) => { this.sendButton = el; }}>
+                        <i className='fa fa-send'></i>
+                    </button>
                 </div>
             </form>
         );
