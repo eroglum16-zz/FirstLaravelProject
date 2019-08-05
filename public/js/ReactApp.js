@@ -3,9 +3,15 @@
 class ChatBox extends React.Component{
     constructor(props){
         super(props);
+
+        const data = JSON.parse(this.props.messages);
+
         this.state = {
-            messages: []
+            messages: data
         }
+
+        //document.getElementById('temp-message').innerText = this.props.messages;
+
         this.handleSend = this.handleSend.bind(this);
     }
     handleSend(){
@@ -32,7 +38,7 @@ class ChatBox extends React.Component{
         const messages = this.state.messages;
 
         const messageList = messages.map((message)=>
-            <p><strong>{message.senderName ? message.senderName+':' : ''}</strong> {message.messageText}</p>
+            <p><strong>{message.sender.name ? message.sender.name+':' : ''}</strong> {message.messageText}</p>
         );
 
         return (

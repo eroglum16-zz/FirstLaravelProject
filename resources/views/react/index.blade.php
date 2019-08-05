@@ -11,7 +11,7 @@
 
         <div id="like_button_container"></div>
 
-        <div id="temp-album"></div>
+        <div id="temp-message"></div>
 
     </div>
 
@@ -26,7 +26,7 @@
 
     <script type="text/babel">
         let domContainer = document.querySelector('#like_button_container');
-        ReactDOM.render(<ChatBox user="{{auth()->user()}}" />, domContainer);
+        ReactDOM.render(<ChatBox messages="{{$messages}}" />, domContainer);
     </script>
 
 @endsection
