@@ -40,11 +40,9 @@ Route::patch('/tasks/{task}','ProjectTasksController@update');
 
 Route::get('/react', 'ReactController@index');
 
-Route::post('/messages','ReactController@setMessages');
+Route::post('/messages','ReactController@setMessages')->middleware('censor');
 
 Route::get('/messages','ReactController@getMessages');
-
-Route::get('/getCSRF',function (){return csrf_token();});
 
 
 //Route::get('/home', 'HomeController@index')->name('home');

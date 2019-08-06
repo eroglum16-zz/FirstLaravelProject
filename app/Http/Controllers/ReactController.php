@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Middleware\CensorSwearwords;
 use App\Message;
 use Psy\Util\Json;
 use Illuminate\Http\Request;

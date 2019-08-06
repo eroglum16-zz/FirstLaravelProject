@@ -7,12 +7,13 @@ class ChatBox extends React.Component{
         const data = JSON.parse(this.props.messages);
 
         this.state = {
+            currentMessage: '',
             messages: data
         }
 
-        //document.getElementById('temp-message').innerText = this.props.messages;
-
         this.handleSend = this.handleSend.bind(this);
+        this.handleTyping = this.handleTyping.bind(this);
+
     }
     componentDidMount() {
         this.timerID = setInterval(
@@ -41,7 +42,7 @@ class ChatBox extends React.Component{
 
         const receiver_id = user.id==1 ? 2 : 1 ;
 
-        const inputElement = document.getElementById('messageText');
+        const currentMessage = this.state.currentMessage;
 
         fetch('/messages', {
             method: 'POST',
@@ -53,7 +54,7 @@ class ChatBox extends React.Component{
             body: JSON.stringify({
                 sender_id: user.id,
                 receiver_id: receiver_id,
-                messageText: inputElement.value
+                messageText: currentMessage
             }),
         }).then((response) => response.json())
             .then((responseJson) => {
@@ -65,11 +66,10 @@ class ChatBox extends React.Component{
                 console.error(error);
             });
 
-
-        inputElement.value = "";
-        var element = document.getElementById('scrollingContainer');
-        element.scrollTop = element.scrollHeight - element.clientHeight;
-
+        this.setState({currentMessage:''});
+    }
+    handleTyping(event){
+        this.setState({currentMessage: event.target.value});
     }
     render() {
         const messages = this.state.messages;
@@ -85,7 +85,11 @@ class ChatBox extends React.Component{
                 </div>
                 <MessagesArea messageList={messageList} ref={(el)=>{this.messagesArea=el;}} />
                 <div className='card-footer'>
-                    <InputArea onClick={this.handleSend} messagesArea={this.messagesArea} ></InputArea>
+                    <InputArea onClick={this.handleSend}
+                               messagesArea={this.messagesArea}
+                               currentMessage={this.state.currentMessage}
+                               handleTyping={this.handleTyping}>
+                    </InputArea>
                 </div>
             </div>
         );
@@ -105,6 +109,7 @@ class MessagesArea extends React.Component{
     componentDidUpdate() {
         this.scrollToBottom();
     }
+
     render(){
         return(
             <div className='card-body message-output' >
@@ -138,8 +143,10 @@ class InputArea extends React.Component{
                     <textarea className='message-input col-md-8'
                               id='messageText'
                               type='text'
+                              value={this.props.currentMessage}
                               placeholder='Message...'
                               onKeyPress={this.handleEnter}
+                              onChange={this.props.handleTyping}
                               autoFocus={true}>
                     </textarea>
                     <button className='btn btn-dark btn-block col-md-2'
@@ -150,42 +157,6 @@ class InputArea extends React.Component{
                     </button>
                 </div>
             </form>
-        );
-    }
-}
-
-
-class AlbumInfo extends React.Component{
-    constructor(props) {
-        super(props);
-        this.state = {album: JSON.parse(this.props.album)};
-    }
-    componentDidMount() {
-        this.timerID = setInterval(
-            () => this.tick(),
-            5000
-        );
-    }
-    componentWillUnmount() {
-        clearInterval(this.timerID);
-    }
-    tick() {
-
-        fetch("serveAlbum/1")
-            .then(res => res.json())
-            .then(
-                (result) => {
-                    this.setState({
-                        album: result
-                    });
-                },
-            )
-    }
-    render() {
-        return (
-            <li>
-               <span>{this.state.album.title}</span><i> by </i><strong>{this.state.album.artist}</strong>
-            </li>
         );
     }
 }
