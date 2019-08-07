@@ -8,11 +8,13 @@ class ChatBox extends React.Component{
 
         this.state = {
             currentMessage: '',
-            messages: data
+            messages: data,
+            currentReceiverId: 0
         }
 
         this.handleSend = this.handleSend.bind(this);
         this.handleTyping = this.handleTyping.bind(this);
+        this.handleReceiverChange = this.handleReceiverChange.bind(this);
 
     }
     componentDidMount() {
@@ -25,26 +27,22 @@ class ChatBox extends React.Component{
         clearInterval(this.timerID);
     }
     tick() {
-        fetch('/messages')
-            .then((response) => response.json())
-            .then((responseJson) => {
-                this.setState({
-                    messages: responseJson
-                });
-            })
-            .catch((error) => {
-                console.error(error);
-            });
+        this.getMessages(this.state.currentReceiverId);
     }
     handleSend(){
 
         const user = JSON.parse(this.props.user);
 
-        const receiver_id = user.id==1 ? 2 : 1 ;
+        const receiver_id = this.state.currentReceiverId;
+
+        if (receiver_id==0){
+            this.setState({currentMessage:''});
+            return;
+        }
 
         const currentMessage = this.state.currentMessage;
 
-        fetch('/messages', {
+        fetch('/messages/'+this.state.currentReceiverId, {
             method: 'POST',
             headers: {
                 Accept: 'application/json',
@@ -71,6 +69,27 @@ class ChatBox extends React.Component{
     handleTyping(event){
         this.setState({currentMessage: event.target.value});
     }
+    handleReceiverChange(event){
+        this.setState({
+            currentReceiverId: event.target.id
+        });
+        this.getMessages(event.target.id);
+    }
+    getMessages(receiverId){
+
+        const receiver = receiverId==0 ? receiverId : this.state.currentReceiverId;
+
+        fetch('/messages/'+receiverId)
+            .then((response) => response.json())
+            .then((responseJson) => {
+                this.setState({
+                    messages: responseJson
+                });
+            })
+            .catch((error) => {
+                console.error(error);
+            });
+    }
     render() {
         const messages = this.state.messages;
 
@@ -78,18 +97,30 @@ class ChatBox extends React.Component{
             <p><strong>{message.sender.name ? message.sender.name+':' : ''}</strong> {message.messageText}</p>
         );
 
+        const userList = JSON.parse(this.props.users);
+
         return (
-            <div className='card col-md-6'>
-                <div className='card-header'>
-                    Chat Box
+            <div className='row'>
+                <div className='card col-md-6'>
+                    <div className='card-header'>
+                        Chat Box
+                    </div>
+                    <MessagesArea messageList={messageList} ref={(el)=>{this.messagesArea=el;}} />
+                    <div className='card-footer'>
+                        <InputArea onClick={this.handleSend}
+                                   messagesArea={this.messagesArea}
+                                   currentMessage={this.state.currentMessage}
+                                   handleTyping={this.handleTyping}>
+                        </InputArea>
+                    </div>
                 </div>
-                <MessagesArea messageList={messageList} ref={(el)=>{this.messagesArea=el;}} />
-                <div className='card-footer'>
-                    <InputArea onClick={this.handleSend}
-                               messagesArea={this.messagesArea}
-                               currentMessage={this.state.currentMessage}
-                               handleTyping={this.handleTyping}>
-                    </InputArea>
+                <div className='card col-md-3'>
+                    <div className='card-header'>
+                        Contact List
+                    </div>
+                    <div className='card-body'>
+                        <Contacts userList={userList} onReceiverChange={this.handleReceiverChange} />
+                    </div>
                 </div>
             </div>
         );
@@ -157,6 +188,21 @@ class InputArea extends React.Component{
                     </button>
                 </div>
             </form>
+        );
+    }
+}
+
+class Contacts extends React.Component{
+    render() {
+        const userList = this.props.userList;
+
+        const users = userList.map((user)=>
+            <button key={user.id} id={user.id} onClick={this.props.onReceiverChange} className='btn btn-info btn-block'>{user.name}</button>
+        );
+        return (
+            <div className='card-body'>
+                {users}
+            </div>
         );
     }
 }

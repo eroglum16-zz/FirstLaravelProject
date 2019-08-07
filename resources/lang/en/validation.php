@@ -132,6 +132,10 @@ return [
         'attribute-name' => [
             'rule-name' => 'custom-message',
         ],
+        'title' => [
+            'required' => 'You need to specify the title for this album.',
+        ],
+
     ],
 
     /*

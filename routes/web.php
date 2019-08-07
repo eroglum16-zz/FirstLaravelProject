@@ -40,9 +40,9 @@ Route::patch('/tasks/{task}','ProjectTasksController@update');
 
 Route::get('/react', 'ReactController@index');
 
-Route::post('/messages','ReactController@setMessages')->middleware('censor');
+Route::post('/messages/{id}','ReactController@setMessages')->middleware('censor');
 
-Route::get('/messages','ReactController@getMessages');
+Route::get('/messages/{id}','ReactController@getMessages');
 
 
 //Route::get('/home', 'HomeController@index')->name('home');

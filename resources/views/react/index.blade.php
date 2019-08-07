@@ -28,6 +28,7 @@
         let domContainer = document.querySelector('#like_button_container');
         ReactDOM.render(<ChatBox messages="{{$messages}}"
                                  user="{{auth()->user()}}"
+                                 users="{{$users}}"
                                  csrf="{{csrf_token()}}" />, domContainer);
     </script>
 
