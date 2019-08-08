@@ -6,10 +6,12 @@ class ChatBox extends React.Component{
 
         const data = JSON.parse(this.props.messages);
 
+        const receiverId = JSON.parse(this.props.receiverId);
+
         this.state = {
             currentMessage: '',
             messages: data,
-            currentReceiverId: 0
+            currentReceiverId: receiverId
         }
 
         this.handleSend = this.handleSend.bind(this);
@@ -20,7 +22,7 @@ class ChatBox extends React.Component{
     componentDidMount() {
         this.timerID = setInterval(
             () => this.tick(),
-            3000
+            2000
         );
     }
     componentWillUnmount() {
@@ -42,7 +44,7 @@ class ChatBox extends React.Component{
 
         const currentMessage = this.state.currentMessage;
 
-        fetch('/messages/'+this.state.currentReceiverId, {
+        fetch('/messages/'+receiver_id, {
             method: 'POST',
             headers: {
                 Accept: 'application/json',
@@ -77,7 +79,7 @@ class ChatBox extends React.Component{
     }
     getMessages(receiverId){
 
-        const receiver = receiverId==0 ? receiverId : this.state.currentReceiverId;
+        const receiver = receiverId;
 
         fetch('/messages/'+receiverId)
             .then((response) => response.json())
@@ -94,7 +96,7 @@ class ChatBox extends React.Component{
         const messages = this.state.messages;
 
         const messageList = messages.map((message)=>
-            <p><strong>{message.sender.name ? message.sender.name+':' : ''}</strong> {message.messageText}</p>
+            <p><strong>{message.sender.name ? message.sender.name : 'Unknown User'}</strong>: {message.messageText}</p>
         );
 
         const userList = JSON.parse(this.props.users);
@@ -119,14 +121,15 @@ class ChatBox extends React.Component{
                         Contact List
                     </div>
                     <div className='card-body'>
-                        <Contacts userList={userList} onReceiverChange={this.handleReceiverChange} />
+                        <Contacts userList={userList}
+                                  currentReceiverId={this.state.currentReceiverId}
+                                  onReceiverChange={this.handleReceiverChange}/>
                     </div>
                 </div>
             </div>
         );
     }
 }
-
 
 class MessagesArea extends React.Component{
     scrollToBottom = () => {
@@ -194,10 +197,18 @@ class InputArea extends React.Component{
 
 class Contacts extends React.Component{
     render() {
+
+        const currentReceiverId = this.props.currentReceiverId;
+
         const userList = this.props.userList;
 
         const users = userList.map((user)=>
-            <button key={user.id} id={user.id} onClick={this.props.onReceiverChange} className='btn btn-info btn-block'>{user.name}</button>
+            <button className={currentReceiverId==user.id ? 'btn btn-dark btn-block' : 'btn btn-info btn-block'}
+                    key={user.id}
+                    id={user.id}
+                    onClick={this.props.onReceiverChange}>
+                {user.name}
+            </button>
         );
         return (
             <div className='card-body'>

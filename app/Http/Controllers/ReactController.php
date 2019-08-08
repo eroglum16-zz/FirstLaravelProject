@@ -21,14 +21,16 @@ class ReactController extends Controller
 
         $users = User::whereNotIn('id',[$my_id])->get();
 
-        $messages =  Message::whereIn('sender_id',[$my_id,0])
-            ->whereIn('receiver_id',[$my_id,0])
+        $receiver_id = session('receiver_id',0);
+
+        $messages =  Message::whereIn('sender_id',[$my_id,$receiver_id])
+            ->whereIn('receiver_id',[$my_id,$receiver_id])
             ->with(['sender','receiver'])
             ->get();
 
 
 
-        return view('react.index',['users'=>$users, 'messages'=>$messages]);
+        return view('react.index',['users'=>$users, 'messages'=>$messages, 'receiver_id'=>$receiver_id]);
     }
 
     public function getMessages($receiver_id){
@@ -38,6 +40,8 @@ class ReactController extends Controller
             ->whereIn('receiver_id',[$my_id,$receiver_id])
             ->with(['sender','receiver'])
             ->get();
+
+        session(['receiver_id' => $receiver_id]);
 
         return $messages;
     }
