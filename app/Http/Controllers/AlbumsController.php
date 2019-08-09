@@ -18,6 +18,11 @@ class AlbumsController extends Controller
         return view('albums.index',compact('albums'));
     }
 
+    public function serveAlbums(){
+        $albums = Album::all();
+        return $albums;
+    }
+
     public function store(){
 
         $validated = request()->validate([
