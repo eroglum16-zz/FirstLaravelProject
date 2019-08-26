@@ -23,23 +23,13 @@ class ReactController extends Controller
 
         $receiver_id = session('receiver_id',0);
 
-        $messages =  Message::whereIn('sender_id',[$my_id,$receiver_id])
-            ->whereIn('receiver_id',[$my_id,$receiver_id])
-            ->with(['sender','receiver'])
-            ->get();
-
-
+        $messages = auth()->user()->messages($receiver_id);
 
         return view('react.index',['users'=>$users, 'messages'=>$messages, 'receiver_id'=>$receiver_id]);
     }
 
     public function getMessages($receiver_id){
-        $my_id = auth()->id();
-
-        $messages =  Message::whereIn('sender_id',[$my_id,$receiver_id])
-            ->whereIn('receiver_id',[$my_id,$receiver_id])
-            ->with(['sender','receiver'])
-            ->get();
+        $messages = auth()->user()->messages($receiver_id);
 
         session(['receiver_id' => $receiver_id]);
 
@@ -56,12 +46,7 @@ class ReactController extends Controller
 
         Message::create($validated);
 
-        $my_id = auth()->id();
-
-        $messages =  Message::whereIn('sender_id',[$my_id,$receiver_id])
-            ->whereIn('receiver_id',[$my_id,$receiver_id])
-            ->with(['sender','receiver'])
-            ->get();
+        $messages = auth()->user()->messages($receiver_id);
 
         return $messages;
     }

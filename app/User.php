@@ -3,6 +3,7 @@
 namespace App;
 
 use Illuminate\Notifications\Notifiable;
+use App\Message;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
@@ -41,11 +42,12 @@ class User extends Authenticatable
         return $this->hasMany(Project::class,'owner_id');
     }
 
-    public function messages(){
+    public function messages($receiver_id){
 
-        return  $this->hasMany(Message::class,'sender_id');
-
-        $messagesReceived =  $this->hasMany(Message::class,'receiver_id');
+        return Message::whereIn('sender_id',[$this->id,$receiver_id])
+            ->whereIn('receiver_id',[$this->id,$receiver_id])
+            ->with(['sender','receiver'])
+            ->get();
 
     }
 }
