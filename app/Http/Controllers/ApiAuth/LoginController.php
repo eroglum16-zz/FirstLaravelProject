@@ -31,15 +31,34 @@ class LoginController extends Controller
         $this->middleware('guest')->except('logout');
     }
 
-    public function attempt(Request $request){
+    /**
+     * Log the user in.
+     *
+     * @return userdata|403
+     */
+    public function login(Request $request){
 
         $this->validateLogin($request);
 
         if ($this->attemptLogin($request)) {
+            auth()->user()->generateToken();
             $data['user']=auth()->user();
             return $data;
         }
 
         return ['Success'=>false, 'Code'=>403];
+    }
+
+    public function logout(Request $request)
+    {
+        $user = auth()->user();
+
+        if ($user) {
+            $user->forgetToken();
+            return response()->json(['message' => 'User logged out.'], 200);
+        }
+
+        return response()->json(['message' => 'User not found.'], 404);
+
     }
 }

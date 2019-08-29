@@ -22,7 +22,11 @@ Route::middleware('auth:api')->get('/albums',function (){
     return $albums;
 });
 
-Route::post('/register','ApiAuth\RegisterController@create');
+Route::post('/register','ApiAuth\RegisterController@register');
 
-Route::post('/login','ApiAuth\LoginController@attempt');
+Route::post('/login','ApiAuth\LoginController@login');
+
+Route::middleware('auth:api')->post('/logout','ApiAuth\LoginController@logout');
+
+
 

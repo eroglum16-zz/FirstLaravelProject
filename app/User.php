@@ -6,6 +6,7 @@ use Illuminate\Notifications\Notifiable;
 use App\Message;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Support\Str;
 
 class User extends Authenticatable
 {
@@ -38,6 +39,20 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
+    public function generateToken()
+    {
+        $this->api_token = Str::random(60);
+        $this->save();
+
+        return $this->api_token;
+    }
+
+    public function forgetToken()
+    {
+        $this->api_token = null;
+        return $this->save();
+    }
+
     public function projects(){
         return $this->hasMany(Project::class,'owner_id');
     }
@@ -50,4 +65,5 @@ class User extends Authenticatable
             ->get();
 
     }
+
 }
